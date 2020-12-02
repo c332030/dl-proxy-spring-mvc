@@ -1,0 +1,22 @@
+
+= dl-proxy-spring-mvc
+
+基于 spring mvc 的文件代理下载服务（简易版的 nginx proxy）
+
+开发的意义是使用境外服务器加速文件下载： github、nexus oss 等网站文件，
+
+请在法律允许范围内使用此软件，本人不正当任何非法使用此软件引发的后果
+
+http://work.c332030.com/PETOOLS.iso
+
+== by get parameter
+
+startup dl-server-app
+
+[source,shell script]
+----
+
+# 代理下载 url 参数后面的文件链接
+curl -L -O http://local.c332030.com:8001/proxy?url=http://work.c332030.com/PETOOLS.iso
+
+----
