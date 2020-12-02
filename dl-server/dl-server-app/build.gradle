@@ -4,3 +4,39 @@ dependencies {
   // implementation project(':dl-server:dl-server-service')
 
 }
+
+// 将依赖包复制到lib目录
+task copyJar(type: Copy) {
+  // delete "$buildDir/libs/lib"
+  from configurations.runtimeClasspath
+  into "$buildDir/libs/lib"
+}
+
+// 拷贝配置文件
+task copyConfigFile(type: Copy) {
+  // delete "$buildDir/libs/config"
+  from('src/main/resources')
+  into "$buildDir/libs/config"
+}
+
+bootJar {
+
+  enabled = true
+
+  archiveName = 'boot.jar'
+
+  // 以 shell 脚本方式运行
+  // launchScript {
+  //   properties 'logFilename': "${project.name}.log'"
+  // }
+
+  dependsOn copyJar
+  dependsOn copyConfigFile
+
+  excludes = ['*.jar', '*.yml', '*.properties']
+
+  manifest {
+    attributes "Manifest-Version": 1.0,
+      'Class-Path': configurations.compileClasspath.files.collect { "lib/$it.name" }.join(' ')
+  }
+}
