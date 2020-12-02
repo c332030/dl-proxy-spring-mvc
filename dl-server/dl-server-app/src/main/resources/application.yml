@@ -1,0 +1,19 @@
+
+server:
+  port: 8001
+
+spring:
+  application:
+    name: proxy-for-spring-mvc
+
+  profiles:
+    active: dev
+    include:
+      - app
+
+
+#mybatis:
+#  type-aliases-package:
+#    - com.c332030.mmm.entity
+#    - com.c332030.mmm.model
+#    - com.c332030.mmm.dao

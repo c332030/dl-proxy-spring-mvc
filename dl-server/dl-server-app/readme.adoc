@@ -1,0 +1,12 @@
+
+= proxy
+
+http://work.c332030.com/PETOOLS.iso
+
+== by get parameter
+
+[source,shell script]
+----
+curl -L -O http://local.c332030.com:8001/proxy?url=http://work.c332030.com/PETOOLS.iso
+
+----

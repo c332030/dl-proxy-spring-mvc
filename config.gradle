@@ -1,0 +1,23 @@
+
+ext {
+
+  group = 'com.c332030'
+  version = '0.0.1-SNAPSHOT'
+
+  charset = 'utf-8'
+
+  versions = [
+
+    spring_boot: '2.3.3.RELEASE'
+    , c_commons_java: '0.0.1-SNAPSHOT'
+    , common_mybatis: '0.0.1-SNAPSHOT'
+    , c_commons_spring: '0.0.1-SNAPSHOT'
+
+    , mybatis_starter: '2.1.1'
+    , mapper_starter: '2.1.5'
+    , pagehelper_starter: '1.2.13'
+
+    , junit: '4.13'
+    , lombok: '1.18.12'
+  ]
+}
