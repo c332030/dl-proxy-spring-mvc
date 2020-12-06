@@ -38,7 +38,7 @@ import static com.google.common.net.HttpHeaders.CONTENT_DISPOSITION;
  */
 @Slf4j
 @Controller
-public class DlProxyController extends BaseController {
+public class ProxyController extends BaseController {
 
     private static final String URL_STR = "url";
 
