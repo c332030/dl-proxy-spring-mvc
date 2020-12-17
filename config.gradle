@@ -17,6 +17,13 @@ ext {
     , mapper_starter: '2.1.5'
     , pagehelper_starter: '1.2.13'
 
+    , apache_commons_lang3: '3.9'
+    , apache_commons_collections: '4.4'
+    , apache_commons_io: '2.6'
+
+    , google_gson: '2.8.6'
+    , google_guava: '29.0-jre'
+
     , junit: '4.13'
     , lombok: '1.18.12'
   ]
