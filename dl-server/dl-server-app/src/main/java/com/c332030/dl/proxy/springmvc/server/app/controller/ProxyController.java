@@ -6,8 +6,11 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.MessageFormat;
 
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
+
+import org.springframework.util.CollectionUtils;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,11 +25,9 @@ import lombok.val;
 import lombok.extern.slf4j.Slf4j;
 
 import com.c332030.controller.BaseController;
-import com.c332030.util.data.StringUtils;
-import com.c332030.util.io.IOUtils;
 import com.c332030.util.web.ServletUtils;
 
-import static com.google.common.net.HttpHeaders.CONTENT_DISPOSITION;
+import static org.springframework.http.HttpHeaders.CONTENT_DISPOSITION;
 
 /**
  * <p>
@@ -71,7 +72,8 @@ public class ProxyController extends BaseController {
             ServletUtils.setHeaders(conn, response);
 
             val contentDispositionList = conn.getHeaderFields().get(CONTENT_DISPOSITION);
-            val newContentDisposition = MessageFormat.format(CONTENT_DISPOSITION_TEMPLATE, FilenameUtils.getName(urlStr));
+            val newContentDisposition = MessageFormat.format(CONTENT_DISPOSITION_TEMPLATE,
+                FilenameUtils.getName(urlStr));
             log.info("CONTENT_DISPOSITION: {}, newContentDisposition: {}", contentDispositionList, newContentDisposition);
 
             if(CollectionUtils.isEmpty(contentDispositionList)
