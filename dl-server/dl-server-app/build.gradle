@@ -3,6 +3,8 @@ dependencies {
 
   implementation project(':dl-server:dl-server-service')
 
+  implementation group: 'com.c332030.spring', name: 'c-spring-app-web', version: versions.c_commons_spring
+
 }
 
 // 将依赖包复制到lib目录

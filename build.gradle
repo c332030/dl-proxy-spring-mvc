@@ -33,13 +33,9 @@ allprojects {
     into("META-INF/resources") {
       from("src/main/webapp")
     }
-
-    into("META-INF/maven/$project.group/$project.name") {
-      from { generatePomFileForMavenPublication }
-      rename ".*", "pom.xml"
-    }
-
   }
+
+  bootJar.enabled = false
 
   java {
     withJavadocJar()
@@ -85,10 +81,6 @@ allprojects {
     testAnnotationProcessor group: "org.projectlombok", name: "lombok"
 
     testImplementation group: "junit", name: "junit"
-
-    implementation group: "com.c332030.commons", name: "c-commons-util", version: versions.c_commons_java
-
-    implementation group: 'com.c332030.spring', name: 'c-spring-app-web', version: versions.c_commons_spring
 
   }
 
