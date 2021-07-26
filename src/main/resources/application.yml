@@ -10,7 +10,9 @@ spring:
     active: dev
     include:
       - app
-
+  devtools:
+    restart:
+      enabled: false
 
 #mybatis:
 #  type-aliases-package:
