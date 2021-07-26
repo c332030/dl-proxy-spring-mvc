@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import com.c332030.controller.BaseController;
 import com.c332030.web.servlet.util.CServletUtils;
 import lombok.extern.slf4j.Slf4j;
-import lombok.val;
 
 /**
  * <p>
@@ -47,21 +46,21 @@ public class ProxyController extends BaseController {
                 return UNKNOWN_PATH;
             }
 
-            HttpURLConnection conn = (HttpURLConnection) new URL(urlStr).openConnection();
+            var conn = (HttpURLConnection) new URL(urlStr).openConnection();
             conn.setInstanceFollowRedirects(true);
             conn.setConnectTimeout(3000);
             conn.setRequestMethod(RequestMethod.GET.name());
             CServletUtils.setHeaders(request, conn);
 
-            int responseCode = conn.getResponseCode();
+            var responseCode = conn.getResponseCode();
             if (200 != responseCode) {
                 return new ResponseEntity<>(conn.getResponseMessage(), HttpStatus.valueOf(responseCode));
             }
 
             CServletUtils.setHeaders(conn, response);
 
-            val contentDispositionList = conn.getHeaderFields().get(HttpHeaders.CONTENT_DISPOSITION);
-            val newContentDisposition = MessageFormat.format(CONTENT_DISPOSITION_TEMPLATE,
+            var contentDispositionList = conn.getHeaderFields().get(HttpHeaders.CONTENT_DISPOSITION);
+            var newContentDisposition = MessageFormat.format(CONTENT_DISPOSITION_TEMPLATE,
                 FilenameUtils.getName(urlStr));
             log.info("HttpHeaders.CONTENT_DISPOSITION: {}, newContentDisposition: {}", contentDispositionList, newContentDisposition);
 
