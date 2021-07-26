@@ -66,6 +66,8 @@ dependencies {
   implementation group: 'com.google.code.gson', name: 'gson', version: gson_version
   implementation group: 'com.google.guava', name: 'guava', version: guava_version
 
+  implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: okhttp_version
+
   implementation group: 'com.c332030.spring', name: 'c-spring-app-web', version: c_commons_spring_version
 
   compileOnly group: "org.projectlombok", name: "lombok"
