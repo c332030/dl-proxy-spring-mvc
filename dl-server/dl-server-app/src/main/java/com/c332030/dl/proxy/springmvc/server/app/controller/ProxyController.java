@@ -1,33 +1,22 @@
 package com.c332030.dl.proxy.springmvc.server.app.controller;
 
 
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.net.*;
 import java.text.MessageFormat;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import org.springframework.util.CollectionUtils;
-
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-
+import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
-
-import lombok.val;
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.util.CollectionUtils;
+import org.springframework.web.bind.annotation.*;
 
 import com.c332030.controller.BaseController;
-import com.c332030.util.web.ServletUtils;
-
-import static org.springframework.http.HttpHeaders.CONTENT_DISPOSITION;
+import com.c332030.web.servlet.util.CServletUtils;
+import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 
 /**
  * <p>
@@ -62,24 +51,24 @@ public class ProxyController extends BaseController {
             conn.setInstanceFollowRedirects(true);
             conn.setConnectTimeout(3000);
             conn.setRequestMethod(RequestMethod.GET.name());
-            ServletUtils.setHeaders(request, conn);
+            CServletUtils.setHeaders(request, conn);
 
             int responseCode = conn.getResponseCode();
             if (200 != responseCode) {
                 return new ResponseEntity<>(conn.getResponseMessage(), HttpStatus.valueOf(responseCode));
             }
 
-            ServletUtils.setHeaders(conn, response);
+            CServletUtils.setHeaders(conn, response);
 
-            val contentDispositionList = conn.getHeaderFields().get(CONTENT_DISPOSITION);
+            val contentDispositionList = conn.getHeaderFields().get(HttpHeaders.CONTENT_DISPOSITION);
             val newContentDisposition = MessageFormat.format(CONTENT_DISPOSITION_TEMPLATE,
                 FilenameUtils.getName(urlStr));
-            log.info("CONTENT_DISPOSITION: {}, newContentDisposition: {}", contentDispositionList, newContentDisposition);
+            log.info("HttpHeaders.CONTENT_DISPOSITION: {}, newContentDisposition: {}", contentDispositionList, newContentDisposition);
 
             if(CollectionUtils.isEmpty(contentDispositionList)
                 || !ATTACHMENT.equals(contentDispositionList.get(0))
             ) {
-                response.setHeader(CONTENT_DISPOSITION, newContentDisposition);
+                response.setHeader(HttpHeaders.CONTENT_DISPOSITION, newContentDisposition);
             }
 
             IOUtils.copy(conn.getInputStream(), response.getOutputStream());
