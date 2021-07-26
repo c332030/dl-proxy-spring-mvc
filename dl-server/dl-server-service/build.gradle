@@ -1,9 +1,0 @@
-
-dependencies {
-
-  api group: 'org.apache.commons', name: 'commons-lang3', version: versions.apache_commons_lang3
-  api group: 'commons-io', name: 'commons-io', version: versions.apache_commons_io
-
-  api group: "com.c332030.commons", name: "c-commons-util", version: versions.c_commons_java
-
-}

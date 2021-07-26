@@ -1,6 +1,2 @@
 
 rootProject.name = 'dl-proxy-spring-mvc'
-
-include 'dl-server'
-include 'dl-server:dl-server-service'
-include 'dl-server:dl-server-app'
