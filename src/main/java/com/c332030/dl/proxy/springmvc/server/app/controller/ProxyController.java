@@ -54,8 +54,7 @@ public class ProxyController extends BaseController {
             conn.setRequestMethod(RequestMethod.GET.name());
             CServletUtils.setHeaders(request, conn);
 
-            var responseCode = conn.getResponseCode();
-            response.setStatus(responseCode);
+            response.setStatus(conn.getResponseCode());
 
             CServletUtils.setHeaders(conn, response);
 
