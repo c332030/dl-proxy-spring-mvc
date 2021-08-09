@@ -10,24 +10,17 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import com.c332030.controller.BaseController;
+import okhttp3.*;
 
 import lombok.extern.slf4j.Slf4j;
-
-import com.c332030.controller.BaseController;
-
-import okhttp3.Headers;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 /**
  * <p>
@@ -62,25 +55,21 @@ public class ProxyController extends BaseController {
             }
 
             Headers.Builder okHeadersBuilder = new Headers.Builder();
-            request.getHeaderNames().asIterator().forEachRemaining(headerName
-                -> okHeadersBuilder.set(headerName, request.getHeader(headerName)));
+            request.getHeaderNames().asIterator().forEachRemaining(headerName -> {
 
-            Request okRequest = new Request.Builder()
+                if(HttpHeaders.HOST.equalsIgnoreCase(headerName)) {
+                    return;
+                }
+                okHeadersBuilder.set(headerName, request.getHeader(headerName));
+            });
+
+            Request okRequest = new Request.Builder().get()
                 .url(urlStr)
                 .headers(okHeadersBuilder.build())
-                .get()
                 .build();
 
-            // System.out.println("Request: " + JSONUtils.toJson(okRequest.headers()));
-
             Response okResponse = okHttpClient.newCall(okRequest).execute();
-
-            // System.out.println("Response: " + JSONUtils.toJson(okResponse.headers()));
-
-            var responseCode = okResponse.code();
-            if (200 != responseCode) {
-                return new ResponseEntity<>(okResponse.message(), HttpStatus.valueOf(responseCode));
-            }
+            response.setStatus(okResponse.code());
 
             okResponse.headers().iterator().forEachRemaining(pair -> {
                 response.setHeader(pair.getFirst(), pair.getSecond());
