@@ -1,32 +1,23 @@
 package com.c332030.dl.proxy.springmvc.server.app.controller;
 
 
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.net.*;
 import java.text.MessageFormat;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import org.springframework.util.CollectionUtils;
-
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-
 import org.springframework.stereotype.Controller;
-
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.util.CollectionUtils;
+import org.springframework.web.bind.annotation.*;
 
 import com.c332030.controller.BaseController;
-import com.c332030.util.data.JSONUtils;
 import com.c332030.web.servlet.util.CServletUtils;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * <p>
@@ -63,14 +54,8 @@ public class ProxyController extends BaseController {
             conn.setRequestMethod(RequestMethod.GET.name());
             CServletUtils.setHeaders(request, conn);
 
-            log.info("requestProperties: {}, headerFields: {}",
-                JSONUtils.toJson(conn.getRequestProperties()),
-                JSONUtils.toJson(conn.getHeaderFields()));
-
             var responseCode = conn.getResponseCode();
-            if (200 != responseCode) {
-                return new ResponseEntity<>(conn.getResponseMessage(), HttpStatus.valueOf(responseCode));
-            }
+            response.setStatus(responseCode);
 
             CServletUtils.setHeaders(conn, response);
 
