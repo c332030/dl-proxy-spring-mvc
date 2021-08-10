@@ -1,7 +1,6 @@
 package com.c332030.dl.proxy.springmvc.server.app.controller;
 
 
-import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.text.MessageFormat;
 import java.util.Objects;
@@ -54,7 +53,7 @@ public class ProxyController extends BaseController {
                 return UNKNOWN_PATH;
             }
 
-            Headers.Builder okHeadersBuilder = new Headers.Builder();
+            var okHeadersBuilder = new Headers.Builder();
             request.getHeaderNames().asIterator().forEachRemaining(headerName -> {
 
                 if(HttpHeaders.HOST.equalsIgnoreCase(headerName)) {
@@ -63,30 +62,28 @@ public class ProxyController extends BaseController {
                 okHeadersBuilder.set(headerName, request.getHeader(headerName));
             });
 
-            Request okRequest = new Request.Builder().get()
+            var okRequest = new Request.Builder().get()
                 .url(urlStr)
                 .headers(okHeadersBuilder.build())
                 .build();
 
-            Response okResponse = okHttpClient.newCall(okRequest).execute();
+            var okResponse = okHttpClient.newCall(okRequest).execute();
             response.setStatus(okResponse.code());
 
+            var contentDisposition = new String[1];
             okResponse.headers().iterator().forEachRemaining(pair -> {
-                response.setHeader(pair.getFirst(), pair.getSecond());
+
+                var first = pair.getFirst();
+                var second = pair.getSecond();
+
+                if(HttpHeaders.CONTENT_DISPOSITION.equals(first)) {
+                    contentDisposition[0] = second;
+                }
+                response.setHeader(first, second);
             });
+            updateContentDisposition(contentDisposition[0], urlStr);
 
-            var contentDisposition = okResponse.headers().get(HttpHeaders.CONTENT_DISPOSITION);
-            var newContentDisposition = MessageFormat
-                .format(CONTENT_DISPOSITION_TEMPLATE, FilenameUtils.getName(urlStr));
-            log.info("HttpHeaders.CONTENT_DISPOSITION: {}, newContentDisposition: {}", contentDisposition, newContentDisposition);
-
-            if(StringUtils.isEmpty(contentDisposition)
-                || !ATTACHMENT.equals(contentDisposition)
-            ) {
-                response.setHeader(HttpHeaders.CONTENT_DISPOSITION, newContentDisposition);
-            }
-
-            InputStream inputStream = Objects.requireNonNull(okResponse.body()).byteStream();
+            var inputStream = Objects.requireNonNull(okResponse.body()).byteStream();
             try(inputStream) {
                 IOUtils.copy(inputStream, response.getOutputStream());
             }
@@ -100,6 +97,17 @@ public class ProxyController extends BaseController {
 
             log.error("unknown error", e);
             return newResponseEntityOK(e.getMessage());
+        }
+    }
+
+    private void updateContentDisposition(String contentDisposition, String urlStr) {
+
+        if(StringUtils.isEmpty(contentDisposition)
+            || !ATTACHMENT.equals(contentDisposition)) {
+
+            var fileName = FilenameUtils.getName(urlStr);
+            var newContentDisposition = MessageFormat.format(CONTENT_DISPOSITION_TEMPLATE, fileName);
+            response.setHeader(HttpHeaders.CONTENT_DISPOSITION, newContentDisposition);
         }
     }
 
