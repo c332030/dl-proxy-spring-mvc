@@ -1,21 +1,24 @@
 package com.c332030.dl.proxy.springmvc.server.app.controller;
 
 
-import java.net.*;
+import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.text.MessageFormat;
+import java.util.Objects;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.CollectionUtils;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.c332030.controller.BaseController;
-import com.c332030.web.servlet.util.CServletUtils;
+import okhttp3.*;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -39,6 +42,9 @@ public class ProxyController extends BaseController {
 
     private static final String CONTENT_DISPOSITION_TEMPLATE = "attachment; filename=\"{0}\"";
 
+    @Autowired
+    private OkHttpClient okHttpClient;
+
     @RequestMapping("proxy")
     public ResponseEntity<?> proxy(@RequestParam(name = URL_STR, required = false) String urlStr) {
         try {
@@ -48,28 +54,42 @@ public class ProxyController extends BaseController {
                 return UNKNOWN_PATH;
             }
 
-            var conn = (HttpURLConnection) new URL(urlStr).openConnection();
-            conn.setInstanceFollowRedirects(true);
-            conn.setConnectTimeout(3000);
-            conn.setRequestMethod(RequestMethod.GET.name());
-            CServletUtils.setHeaders(request, conn);
+            Headers.Builder okHeadersBuilder = new Headers.Builder();
+            request.getHeaderNames().asIterator().forEachRemaining(headerName -> {
 
-            response.setStatus(conn.getResponseCode());
+                if(HttpHeaders.HOST.equalsIgnoreCase(headerName)) {
+                    return;
+                }
+                okHeadersBuilder.set(headerName, request.getHeader(headerName));
+            });
 
-            CServletUtils.setHeaders(conn, response);
+            Request okRequest = new Request.Builder().get()
+                .url(urlStr)
+                .headers(okHeadersBuilder.build())
+                .build();
 
-            var contentDispositionList = conn.getHeaderFields().get(HttpHeaders.CONTENT_DISPOSITION);
-            var newContentDisposition = MessageFormat.format(CONTENT_DISPOSITION_TEMPLATE,
-                FilenameUtils.getName(urlStr));
-            log.info("HttpHeaders.CONTENT_DISPOSITION: {}, newContentDisposition: {}", contentDispositionList, newContentDisposition);
+            Response okResponse = okHttpClient.newCall(okRequest).execute();
+            response.setStatus(okResponse.code());
 
-            if(CollectionUtils.isEmpty(contentDispositionList)
-                || !ATTACHMENT.equals(contentDispositionList.get(0))
+            okResponse.headers().iterator().forEachRemaining(pair -> {
+                response.setHeader(pair.getFirst(), pair.getSecond());
+            });
+
+            var contentDisposition = okResponse.headers().get(HttpHeaders.CONTENT_DISPOSITION);
+            var newContentDisposition = MessageFormat
+                .format(CONTENT_DISPOSITION_TEMPLATE, FilenameUtils.getName(urlStr));
+            log.info("HttpHeaders.CONTENT_DISPOSITION: {}, newContentDisposition: {}", contentDisposition, newContentDisposition);
+
+            if(StringUtils.isEmpty(contentDisposition)
+                || !ATTACHMENT.equals(contentDisposition)
             ) {
                 response.setHeader(HttpHeaders.CONTENT_DISPOSITION, newContentDisposition);
             }
 
-            IOUtils.copy(conn.getInputStream(), response.getOutputStream());
+            InputStream inputStream = Objects.requireNonNull(okResponse.body()).byteStream();
+            try(inputStream) {
+                IOUtils.copy(inputStream, response.getOutputStream());
+            }
 
             return null;
         } catch (MalformedURLException e) {
