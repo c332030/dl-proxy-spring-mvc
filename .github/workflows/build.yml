@@ -17,4 +17,4 @@ jobs:
           java-version: '11'
           distribution: 'adopt-openj9'
       - name: Build with Gradle
-        run: ./gradlew build && pwd && ls -alh
+        run: ./gradlew build && ssh -T git@github.com
