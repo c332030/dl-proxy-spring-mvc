@@ -1,4 +1,4 @@
-package com.c332030.dl.proxy.springmvc.server.app.configuration;
+package com.c332030.dl.proxy.server.app.configuration;
 
 import java.util.concurrent.TimeUnit;
 

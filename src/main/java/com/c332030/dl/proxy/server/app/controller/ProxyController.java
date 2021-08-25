@@ -1,4 +1,4 @@
-package com.c332030.dl.proxy.springmvc.server.app.controller;
+package com.c332030.dl.proxy.server.app.controller;
 
 
 import java.net.MalformedURLException;

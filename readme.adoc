@@ -1,11 +1,11 @@
 
-= dl-proxy-spring-mvc
+= dl-proxy
 
 基于 spring mvc 的文件代理下载服务（简易版的 nginx proxy）
 
 开发的意义是使用境外服务器加速文件下载： github、nexus oss 等网站文件，
 
-请在法律允许范围内使用此软件，本人不正当任何非法使用此软件引发的后果
+请在法律允许范围内使用此软件，本人不承担任何非法使用此软件引发的后果
 
 == by get parameter
 

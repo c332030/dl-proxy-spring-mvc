@@ -1,4 +1,4 @@
-package com.c332030.dl.proxy.springmvc.server.app;
+package com.c332030.dl.proxy.server.app;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -19,10 +19,10 @@ import static com.c332030.constant.PackageConstants.BASE;
 // @MapperScan(basePackages = {
 //     BASE_DAO
 // })
-public class DlProxySpringMvcApplication {
+public class DlProxyApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(DlProxySpringMvcApplication.class, args);
+        SpringApplication.run(DlProxyApplication.class, args);
     }
 
 }
