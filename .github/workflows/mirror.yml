@@ -11,8 +11,8 @@ jobs:
         timeout-minutes: 30
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          COMMAND: |-
-            ${{ secrets.SSH }}
-            ${{ secrets.GRADLE_BUILD_COMMAND }}
-            ${{ secrets.REPOSITORY }}
+          COMMAND: |
+            ${{ secrets.SSH }} \
+            ${{ secrets.GRADLE_BUILD_COMMAND }} \
+            ${{ secrets.REPOSITORY }} \
             ${{ secrets.BRANCH }}
