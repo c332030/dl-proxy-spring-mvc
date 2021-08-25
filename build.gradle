@@ -33,8 +33,7 @@ jar {
 }
 
 bootJar {
-
-  archiveName = 'boot.jar'
+  archiveFileName = 'boot.jar'
   launchScript()
 }
 
