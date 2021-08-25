@@ -1,4 +1,3 @@
-
 import org.apache.tools.ant.taskdefs.condition.Os
 
 buildscript {
@@ -18,6 +17,14 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
 [compileJava, compileTestJava, javadoc]*.options*.encoding = charset
+
+java {
+  toolchain {
+    languageVersion = JavaLanguageVersion.of(jdk_version)
+    vendor = JvmVendorSpec.ADOPTOPENJDK
+    implementation = JvmImplementation.J9
+  }
+}
 
 jar {
   into("META-INF/resources") {
