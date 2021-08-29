@@ -1,10 +1,7 @@
 
 name: mirror
 
-on:
-  push:
-    branches:
-      - main
+on: push
 
 jobs:
   sync:
