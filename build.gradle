@@ -48,6 +48,14 @@ idea {
   }
 }
 
+release {
+  git {
+    requireBranch = 'main'
+    pushToRemote = 'origin'
+    signTag = true
+  }
+}
+
 repositories {
   if (Os.isFamily(Os.FAMILY_WINDOWS)) {
 
