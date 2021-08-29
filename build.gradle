@@ -113,7 +113,7 @@ dependencies {
 
   implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: okhttp_version
 
-  implementation group: 'com.c332030.spring', name: 'c-spring-app-web', version: c_commons_spring_version
+  implementation group: 'com.c332030', name: 'c-spring-app-web', version: c_commons_spring_version
 
   compileOnly group: "org.projectlombok", name: "lombok"
   annotationProcessor group: "org.projectlombok", name: "lombok"
