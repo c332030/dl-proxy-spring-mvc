@@ -11,6 +11,10 @@ buildscript {
   }
 }
 
+plugins {
+  id 'net.researchgate.release' version '2.8.1'
+}
+
 apply plugin: 'java-library'
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
@@ -68,7 +72,10 @@ repositories {
 
     mavenCentral()
     maven {
-      url 'https://oss.sonatype.org/content/groups/public/'
+      url 'https://oss.sonatype.org/content/repositories/snapshots/'
+    }
+    maven {
+      url 'https://oss.sonatype.org/service/local/repositories/releases/content/'
     }
   }
 }
@@ -106,14 +113,6 @@ dependencies {
   testCompileOnly group: "org.projectlombok", name: "lombok"
   testAnnotationProcessor group: "org.projectlombok", name: "lombok"
 
-}
-
-sourceSets {
-  main {
-    resources {
-      srcDir 'src/main/java'
-    }
-  }
 }
 
 test {
