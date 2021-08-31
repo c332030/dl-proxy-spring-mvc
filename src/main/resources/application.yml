@@ -4,7 +4,7 @@ server:
 
 spring:
   application:
-    name: proxy-for-spring-mvc
+    name: dl-proxy
 
   profiles:
     active: dev
