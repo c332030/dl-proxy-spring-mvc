@@ -15,7 +15,7 @@ jobs:
           distribution: 'adopt-openj9'
           architecture: x64
       - name: Build with Gradle
-        run: sh gradlew build
+        run: ${{ secrets.GRADLEW }} build
       - name: Git SSH Action
         uses: cc332030/git-ssh-action@v0.0.1
         env:
