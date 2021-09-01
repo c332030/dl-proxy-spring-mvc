@@ -22,6 +22,14 @@ apply plugin: 'io.spring.dependency-management'
 
 [compileJava, compileTestJava, javadoc]*.options*.encoding = charset
 
+java {
+  toolchain {
+    languageVersion = JavaLanguageVersion.of(jdk_version)
+    vendor = JvmVendorSpec.ADOPTOPENJDK
+    implementation = JvmImplementation.J9
+  }
+}
+
 jar {
   into("META-INF/resources") {
     from("src/main/webapp")
