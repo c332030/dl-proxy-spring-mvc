@@ -14,8 +14,6 @@ spring:
     restart:
       enabled: false
 
-#mybatis:
-#  type-aliases-package:
-#    - com.c332030.mmm.entity
-#    - com.c332030.mmm.model
-#    - com.c332030.mmm.dao
+logging:
+  level:
+    root: info
