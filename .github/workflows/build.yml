@@ -14,13 +14,6 @@ jobs:
           java-version: 11
           distribution: adopt
           architecture: x64
-      - uses: actions/cache@v2
-        with:
-          key: gradle
-          path: |
-            ~/.gradle/wrapper
-            ~/.gradle/jdks
-            ~/.gradle/caches
       - name: Build with Gradle
         run: ${{ secrets.GRADLEW }} build
       - name: Git SSH Action
