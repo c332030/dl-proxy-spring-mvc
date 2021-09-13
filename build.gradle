@@ -3,6 +3,7 @@ import org.apache.tools.ant.taskdefs.condition.Os
 buildscript {
 
   repositories {
+    mavenLocal()
     mavenCentral()
   }
 
