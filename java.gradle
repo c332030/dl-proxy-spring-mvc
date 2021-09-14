@@ -1,0 +1,32 @@
+
+[compileJava, compileTestJava, javadoc]*.options*.encoding = charset
+
+test {
+  exclude '**/*Test*.class'
+}
+
+java {
+  toolchain {
+    languageVersion = JavaLanguageVersion.of(jdk_version)
+    vendor = JvmVendorSpec.ADOPTOPENJDK
+    implementation = JvmImplementation.J9
+  }
+}
+
+jar {
+  into("META-INF/resources") {
+    from("src/main/webapp")
+  }
+}
+
+bootJar {
+  archiveFileName = 'boot.jar'
+  launchScript()
+}
+
+idea {
+  module {
+    downloadJavadoc = false
+    downloadSources = false
+  }
+}

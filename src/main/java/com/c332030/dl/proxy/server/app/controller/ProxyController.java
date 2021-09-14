@@ -1,6 +1,5 @@
 package com.c332030.dl.proxy.server.app.controller;
 
-
 import java.net.MalformedURLException;
 import java.text.MessageFormat;
 import java.util.Objects;
@@ -9,17 +8,22 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.c332030.controller.BaseController;
-import okhttp3.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 import lombok.extern.slf4j.Slf4j;
+
+import com.c332030.controller.BaseController;
+
+import okhttp3.Headers;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 
 /**
  * <p>
@@ -73,13 +77,13 @@ public class ProxyController extends BaseController {
             var contentDisposition = new String[1];
             okResponse.headers().iterator().forEachRemaining(pair -> {
 
-                var first = pair.getFirst();
-                var second = pair.getSecond();
+                var key = pair.getFirst();
+                var value = pair.getSecond();
 
-                if(HttpHeaders.CONTENT_DISPOSITION.equals(first)) {
-                    contentDisposition[0] = second;
+                if(HttpHeaders.CONTENT_DISPOSITION.equals(key)) {
+                    contentDisposition[0] = value;
                 }
-                response.setHeader(first, second);
+                response.setHeader(key, value);
             });
             updateContentDisposition(contentDisposition[0], urlStr);
 

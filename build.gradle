@@ -1,14 +1,6 @@
-import org.apache.tools.ant.taskdefs.condition.Os
-
 buildscript {
-
-  repositories {
-    mavenLocal()
-    mavenCentral()
-  }
-
   dependencies {
-    classpath(group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: '2.3.3.RELEASE')
+    classpath(group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: libs.versions.spring.boot.get())
   }
 }
 
@@ -21,78 +13,10 @@ apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
-[compileJava, compileTestJava, javadoc]*.options*.encoding = charset
-
-java {
-  toolchain {
-    languageVersion = JavaLanguageVersion.of(jdk_version)
-    vendor = JvmVendorSpec.ADOPTOPENJDK
-    implementation = JvmImplementation.J9
-  }
-}
-
-jar {
-  into("META-INF/resources") {
-    from("src/main/webapp")
-  }
-}
-
-bootJar {
-  archiveFileName = 'boot.jar'
-  launchScript()
-}
-
-idea {
-  module {
-    downloadJavadoc = false
-    downloadSources = false
-  }
-}
-
-release {
-  git {
-    requireBranch = 'main'
-    pushToRemote = 'origin'
-    signTag = true
-  }
-}
-
-//  configurations.all {
-//    resolutionStrategy.cacheDynamicVersionsFor 1, 'seconds'
-//    resolutionStrategy.cacheChangingModulesFor 1, 'seconds'
-//  }
-
-repositories {
-  if (Os.isFamily(Os.FAMILY_WINDOWS)) {
-
-    maven {
-      url 'https://maven.aliyun.com/repository/public'
-    }
-    maven {
-      credentials {
-        username aliyunPackagesUsername
-        password aliyunPackagesPassword
-      }
-      url 'https://packages.aliyun.com/maven/repository/2011805-snapshot-nunUNu'
-    }
-    maven {
-      credentials {
-        username aliyunPackagesUsername
-        password aliyunPackagesPassword
-      }
-      url 'https://packages.aliyun.com/maven/repository/2011805-release-MMUG60'
-    }
-  } else {
-
-    mavenCentral()
-    maven {
-      url 'https://oss.sonatype.org/content/repositories/snapshots/'
-    }
-    maven {
-      url 'https://oss.sonatype.org/service/local/repositories/releases/content/'
-    }
-  }
-}
+// configurations.all {
+//   resolutionStrategy.cacheDynamicVersionsFor 1, 'seconds'
+//   resolutionStrategy.cacheChangingModulesFor 1, 'seconds'
+// }
 
 dependencies {
 
@@ -110,16 +34,16 @@ dependencies {
     exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
   }
 
-  implementation group: 'org.apache.commons', name: 'commons-lang3', version: commons_lang3_version
-  implementation group: 'org.apache.commons', name: 'commons-collections4', version: commons_collections_version
-  implementation group: 'commons-io', name: 'commons-io', version: commons_io_version
+  implementation group: 'org.apache.commons', name: 'commons-lang3'
+  implementation libs.commons.collections
+  implementation libs.commons.io
 
-  implementation group: 'com.google.code.gson', name: 'gson', version: gson_version
-  implementation group: 'com.google.guava', name: 'guava', version: guava_version
+  implementation group: 'com.google.code.gson', name: 'gson'
+  implementation libs.guava
 
-  implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: okhttp_version
+  implementation libs.okhttp
 
-  implementation group: 'com.c332030', name: 'c-spring-app-web', version: c_commons_spring_version
+  implementation group: 'com.c332030', name: 'c-spring-app-web', version: libs.versions.c.commons.spring.get()
 
   compileOnly group: "org.projectlombok", name: "lombok"
   annotationProcessor group: "org.projectlombok", name: "lombok"
@@ -129,6 +53,12 @@ dependencies {
 
 }
 
-test {
-  exclude '**/*Test*.class'
+release {
+  git {
+    requireBranch = 'main'
+    pushToRemote = 'origin'
+    signTag = true
+  }
 }
+
+apply from: 'java.gradle'
