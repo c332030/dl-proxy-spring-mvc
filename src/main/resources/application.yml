@@ -9,7 +9,8 @@ spring:
   profiles:
     active: dev
     include:
-      - app
+      - log-file
+
   devtools:
     restart:
       enabled: false
