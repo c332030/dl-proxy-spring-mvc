@@ -34,22 +34,19 @@ dependencies {
     exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
   }
 
-  implementation group: 'org.apache.commons', name: 'commons-lang3'
+  implementation libs.commons.lang
   implementation libs.commons.collections
   implementation libs.commons.io
 
-  implementation group: 'com.google.code.gson', name: 'gson'
   implementation libs.guava
-
   implementation libs.okhttp
 
   implementation group: 'com.c332030', name: 'c-spring-app-web', version: libs.versions.c.commons.spring.get()
 
-  compileOnly group: "org.projectlombok", name: "lombok"
-  annotationProcessor group: "org.projectlombok", name: "lombok"
-
-  testCompileOnly group: "org.projectlombok", name: "lombok"
-  testAnnotationProcessor group: "org.projectlombok", name: "lombok"
+  compileOnly libs.lombok
+  annotationProcessor libs.lombok
+  testCompileOnly libs.lombok
+  testAnnotationProcessor libs.lombok
 
 }
 

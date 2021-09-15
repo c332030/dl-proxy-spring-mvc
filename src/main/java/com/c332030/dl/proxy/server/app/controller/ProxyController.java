@@ -19,11 +19,11 @@ import org.springframework.stereotype.Controller;
 
 import lombok.extern.slf4j.Slf4j;
 
-import com.c332030.controller.BaseController;
-
 import okhttp3.Headers;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+
+import com.c332030.controller.BaseController;
 
 /**
  * <p>
