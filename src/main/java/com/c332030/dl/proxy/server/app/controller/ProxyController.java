@@ -1,9 +1,11 @@
 package com.c332030.dl.proxy.server.app.controller;
 
 import java.net.MalformedURLException;
+import java.net.SocketException;
 import java.text.MessageFormat;
 import java.util.Objects;
 
+import org.apache.catalina.connector.ClientAbortException;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -19,11 +21,12 @@ import org.springframework.stereotype.Controller;
 
 import lombok.extern.slf4j.Slf4j;
 
+import com.c332030.controller.CAbstractController;
+import com.c332030.util.SpringWebUtils;
+
 import okhttp3.Headers;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-
-import com.c332030.controller.BaseController;
 
 /**
  * <p>
@@ -35,13 +38,13 @@ import com.c332030.controller.BaseController;
  */
 @Slf4j
 @Controller
-public class ProxyController extends BaseController {
+public class ProxyController extends CAbstractController {
 
     private static final String URL_STR = "url";
 
     private static final String ATTACHMENT = "attachment";
 
-    private static final ResponseEntity<String> UNKNOWN_PATH = newResponseEntityOK("unknown url");
+    private static final ResponseEntity<String> UNKNOWN_PATH = SpringWebUtils.newResponseEntityOK("unknown url");
 
     private static final String CONTENT_DISPOSITION_TEMPLATE = "attachment; filename=\"{0}\"";
 
@@ -96,11 +99,16 @@ public class ProxyController extends BaseController {
         } catch (MalformedURLException e) {
 
             log.error("error url", e);
-            return newResponseEntityOK("error url：" + urlStr);
+            return SpringWebUtils.newResponseEntityOK("error url：" + urlStr);
+
+        } catch (ClientAbortException | SocketException e) {
+
+            log.debug("ignore exception", e);
+            return SpringWebUtils.RESPONSE_ENTITY_EMPTY;
         } catch (Exception e) {
 
             log.error("unknown error", e);
-            return newResponseEntityOK(e.getMessage());
+            return SpringWebUtils.newResponseEntityOK(e.getMessage());
         }
     }
 

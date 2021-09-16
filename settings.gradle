@@ -49,7 +49,7 @@ dependencyResolutionManagement {
 
   versionCatalogs {
     libs {
-      from(group: 'com.c332030', name: 'c-commons-catalog', version: '1.0.0')
+      from(group: 'com.c332030', name: 'c-commons-catalog', version: '1.0.1-SNAPSHOT')
     }
   }
 }
