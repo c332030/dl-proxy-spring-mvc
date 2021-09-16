@@ -44,7 +44,7 @@ public class ProxyController extends CAbstractController {
 
     private static final String ATTACHMENT = "attachment";
 
-    private static final ResponseEntity<String> UNKNOWN_PATH = SpringWebUtils.newResponseEntityOK("unknown url");
+    private static final ResponseEntity<String> UNKNOWN_PATH = ResponseEntity.ok("unknown url");
 
     private static final String CONTENT_DISPOSITION_TEMPLATE = "attachment; filename=\"{0}\"";
 
@@ -99,8 +99,7 @@ public class ProxyController extends CAbstractController {
         } catch (MalformedURLException e) {
 
             log.error("error url", e);
-            return SpringWebUtils.newResponseEntityOK("error url：" + urlStr);
-
+            return ResponseEntity.ok("error url：" + urlStr);
         } catch (ClientAbortException | SocketException e) {
 
             log.debug("ignore exception", e);
@@ -108,7 +107,7 @@ public class ProxyController extends CAbstractController {
         } catch (Exception e) {
 
             log.error("unknown error", e);
-            return SpringWebUtils.newResponseEntityOK(e.getMessage());
+            return ResponseEntity.ok(e.getMessage());
         }
     }
 
