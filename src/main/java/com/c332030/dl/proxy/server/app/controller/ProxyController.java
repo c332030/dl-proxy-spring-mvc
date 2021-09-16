@@ -11,7 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +48,7 @@ public class ProxyController extends BaseController {
     @Autowired
     private OkHttpClient okHttpClient;
 
-    @RequestMapping("proxy")
+    @GetMapping("proxy")
     public ResponseEntity<?> proxy(@RequestParam(name = URL_STR, required = false) String urlStr) {
         try {
 
