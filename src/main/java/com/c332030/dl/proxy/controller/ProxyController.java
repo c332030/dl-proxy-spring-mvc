@@ -1,4 +1,4 @@
-package com.c332030.dl.proxy.server.app.controller;
+package com.c332030.dl.proxy.controller;
 
 import java.net.MalformedURLException;
 import java.net.SocketException;
@@ -114,6 +114,8 @@ public class ProxyController extends CAbstractController {
 
         if(StringUtils.isEmpty(contentDisposition)
             || !ATTACHMENT.equals(contentDisposition)) {
+
+
 
             var fileName = FilenameUtils.getName(urlStr);
             var newContentDisposition = MessageFormat.format(CONTENT_DISPOSITION_TEMPLATE, fileName);

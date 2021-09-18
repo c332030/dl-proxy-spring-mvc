@@ -1,4 +1,4 @@
-package com.c332030.dl.proxy.server.app;
+package com.c332030.dl.proxy;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
