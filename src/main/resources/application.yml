@@ -11,10 +11,6 @@ spring:
     include:
       - log-file
 
-  devtools:
-    restart:
-      enabled: false
-
 logging:
   level:
     root: info
