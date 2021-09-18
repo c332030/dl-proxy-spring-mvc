@@ -5,7 +5,6 @@ import java.net.SocketException;
 import java.text.MessageFormat;
 import java.util.Objects;
 
-import org.apache.catalina.connector.ClientAbortException;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -17,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+
+import org.eclipse.jetty.io.EofException;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -97,7 +98,7 @@ public class ProxyController extends CAbstractController {
 
             log.error("error url", e);
             return ResponseEntity.ok("error url：" + urlStr);
-        } catch (ClientAbortException | SocketException e) {
+        } catch (SocketException | EofException e) {
 
             log.debug("ignore exception", e);
             return SpringWebUtils.RESPONSE_ENTITY_EMPTY;
