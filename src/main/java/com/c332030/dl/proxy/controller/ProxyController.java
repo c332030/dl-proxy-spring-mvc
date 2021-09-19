@@ -1,13 +1,11 @@
-package com.c332030.dl.proxy.server.app.controller;
+package com.c332030.dl.proxy.controller;
 
 import java.net.MalformedURLException;
 import java.net.SocketException;
 import java.text.MessageFormat;
 import java.util.Objects;
 
-import org.apache.catalina.connector.ClientAbortException;
 import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import org.springframework.http.HttpHeaders;
@@ -18,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+
+import org.eclipse.jetty.io.EofException;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -92,15 +92,13 @@ public class ProxyController extends CAbstractController {
 
             var inputStream = Objects.requireNonNull(okResponse.body()).byteStream();
             try(inputStream) {
-                IOUtils.copy(inputStream, response.getOutputStream());
+                inputStream.transferTo(response.getOutputStream());
             }
-
-            return null;
         } catch (MalformedURLException e) {
 
             log.error("error url", e);
             return ResponseEntity.ok("error url：" + urlStr);
-        } catch (ClientAbortException | SocketException e) {
+        } catch (SocketException | EofException e) {
 
             log.debug("ignore exception", e);
             return SpringWebUtils.RESPONSE_ENTITY_EMPTY;
@@ -109,12 +107,16 @@ public class ProxyController extends CAbstractController {
             log.error("unknown error", e);
             return ResponseEntity.ok(e.getMessage());
         }
+
+        return null;
     }
 
     private void updateContentDisposition(String contentDisposition, String urlStr) {
 
         if(StringUtils.isEmpty(contentDisposition)
             || !ATTACHMENT.equals(contentDisposition)) {
+
+
 
             var fileName = FilenameUtils.getName(urlStr);
             var newContentDisposition = MessageFormat.format(CONTENT_DISPOSITION_TEMPLATE, fileName);

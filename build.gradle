@@ -22,13 +22,15 @@ dependencies {
 
   implementation 'org.springframework.boot:spring-boot-starter'
 
-  implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web'
+  implementation(group: 'org.springframework.boot', name: 'spring-boot-starter-web') {
+    exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
+  }
   implementation group: 'org.springframework.boot', name: 'spring-boot-starter-jetty'
 
   implementation group: 'org.springframework.boot', name: 'spring-boot-configuration-processor'
   annotationProcessor group: 'org.springframework.boot', name: 'spring-boot-configuration-processor'
 
-  implementation 'org.springframework.boot:spring-boot-devtools'
+  developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
   testImplementation(group: 'org.springframework.boot', name: 'spring-boot-starter-test') {
     exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
