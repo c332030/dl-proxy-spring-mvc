@@ -16,12 +16,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Set up JDK 11
-        uses: actions/setup-java@v2
-        with:
-          java-version: 11
-          distribution: adopt
-          architecture: x64
       - uses: actions/cache@v2
         with:
           key: gradle
@@ -29,10 +23,11 @@ jobs:
             ~/.gradle/wrapper
             ~/.gradle/jdks
             ~/.gradle/caches
-      - name: Build with Gradle
+      - name: build
         run: ${{ secrets.GRADLEW }} build
-      - name: Git SSH Action
-        uses: cc332030/git-ssh-action@v0.0.1
+      - name: init ssh
+        run: ${{ secrets.INIT_SSH }}
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          GIT_SSH_COMMAND: ${{ secrets.BUILD_DEPLOY }}
+      - name: deploy
+        run: ${{ secrets.BUILD_DEPLOY }}
