@@ -16,7 +16,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: java -version
       - uses: actions/cache@v2
         with:
           key: gradle1
@@ -24,7 +23,6 @@ jobs:
             ~/.gradle/wrapper
             ~/.gradle/jdks
             ~/.gradle/caches
-      - run: ls -alh ~/.gradle && ls -alh ~/.gradle/jdks
       - name: build
         run: ${{ secrets.GRADLEW }} build
       - name: init ssh
