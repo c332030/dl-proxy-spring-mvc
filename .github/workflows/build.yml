@@ -24,7 +24,7 @@ jobs:
             ~/.gradle/wrapper
             ~/.gradle/jdks
             ~/.gradle/caches
-      - run: ls -alh ~/.gardle && ls -alh ~/.gardle/jdks
+      - run: ls -alh ~/.gradle && ls -alh ~/.gradle/jdks
       - name: build
         run: ${{ secrets.GRADLEW }} build
       - name: init ssh
