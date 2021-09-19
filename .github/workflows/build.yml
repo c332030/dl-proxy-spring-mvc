@@ -18,7 +18,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/cache@v2
         with:
-          key: gradle
+          key: gradle1
           path: |
             ~/.gradle/wrapper
             ~/.gradle/jdks
