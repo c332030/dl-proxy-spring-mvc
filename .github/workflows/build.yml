@@ -18,15 +18,13 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/cache@v2
         with:
-          key: gradle1
+          key: gradle
           path: |
             ~/.gradle/wrapper
             ~/.gradle/jdks
             ~/.gradle/caches
-      - name: build
-        run: ${{ secrets.GRADLEW }} build
-      - name: init ssh
-        run: ${{ secrets.INIT_SSH }}
+      - run: ./gradlew --refresh-dependencies build
+      - uses: cc332030/init-ssh-action@main
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
       - name: deploy
