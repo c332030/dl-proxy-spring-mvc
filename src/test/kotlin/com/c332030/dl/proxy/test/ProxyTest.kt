@@ -1,25 +1,26 @@
-package com.c332030.dl.proxy.test;
+package com.c332030.dl.proxy.test
 
-import org.junit.jupiter.api.Test;
-
-import lombok.SneakyThrows;
-import lombok.extern.slf4j.Slf4j;
+import lombok.SneakyThrows
+import lombok.extern.slf4j.Slf4j
+import mu.KotlinLogging
+import org.junit.jupiter.api.Test
 
 /**
- * <p>
  * Description: ProxyTest
- * </p>
  *
  * @author c332030
  * @version 1.0
  */
+
+private val log = KotlinLogging.logger {}
+
 @Slf4j
-public class ProxyTest {
+class ProxyTest {
 
-    @Test
-    @SneakyThrows
-    public void test() {
+  @Test
+  @SneakyThrows
+  fun test() {
+    log.info("result")
+  }
 
-        log.info("result");
-    }
 }
