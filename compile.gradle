@@ -30,3 +30,11 @@ idea {
     downloadSources = false
   }
 }
+
+tasks {
+  compileKotlin {
+    kotlinOptions {
+      jvmTarget = targetCompatibility
+    }
+  }
+}

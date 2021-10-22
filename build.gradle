@@ -63,4 +63,4 @@ release {
   }
 }
 
-apply from: 'java.gradle'
+apply from: 'compile.gradle'
