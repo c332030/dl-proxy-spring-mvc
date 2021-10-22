@@ -14,7 +14,7 @@ compileTestKotlin {
 }
 
 test {
-  exclude '**/*Test*.class'
+  useJUnitPlatform()
 }
 
 java {
