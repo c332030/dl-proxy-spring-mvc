@@ -7,6 +7,12 @@ compileKotlin {
   }
 }
 
+compileTestKotlin {
+  kotlinOptions {
+    jvmTarget = targetCompatibility
+  }
+}
+
 test {
   exclude '**/*Test*.class'
 }
