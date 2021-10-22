@@ -37,8 +37,6 @@ dependencies {
     exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
   }
 
-  implementation 'io.github.microutils:kotlin-logging-jvm:2.0.10'
-
   implementation libs.commons.lang
   implementation libs.commons.collections
   implementation libs.commons.io
@@ -47,6 +45,7 @@ dependencies {
   implementation libs.okhttp
 
   implementation group: 'com.c332030', name: 'c-spring-app-web', version: libs.versions.c.commons.spring.get()
+  implementation group: 'com.c332030', name: 'c-commons-kotlin', version: libs.versions.c.commons.kotlin.get()
 
   compileOnly libs.lombok
   annotationProcessor libs.lombok

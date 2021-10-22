@@ -1,6 +1,4 @@
 
-[compileJava, compileTestJava, javadoc]*.options*.encoding = charset
-
 compileKotlin {
   kotlinOptions {
     jvmTarget = targetCompatibility

@@ -1,8 +1,8 @@
 package com.c332030.dl.proxy.test
 
+import com.c332030.CLogger
 import lombok.SneakyThrows
 import lombok.extern.slf4j.Slf4j
-import mu.KotlinLogging
 import org.junit.jupiter.api.Test
 
 /**
@@ -12,15 +12,15 @@ import org.junit.jupiter.api.Test
  * @version 1.0
  */
 
-private val log = KotlinLogging.logger {}
-
 @Slf4j
 class ProxyTest {
+
+  private val log = CLogger(this.javaClass)
 
   @Test
   @SneakyThrows
   fun test() {
-    log.info("result")
+    log.info { "result" }
   }
 
 }

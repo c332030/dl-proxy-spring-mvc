@@ -1,8 +1,8 @@
 package com.c332030.dl.proxy.controller
 
+import com.c332030.CLogger
 import com.c332030.controller.CAbstractController
 import com.c332030.util.SpringWebUtils
-import mu.KotlinLogging
 import okhttp3.Headers
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -18,10 +18,10 @@ import java.net.MalformedURLException
 import java.net.SocketException
 import java.text.MessageFormat
 
-private val log = KotlinLogging.logger {}
-
 @Controller
 class ProxyController(@Autowired val okHttpClient: OkHttpClient) : CAbstractController() {
+
+  private val log = CLogger(this.javaClass)
 
   private val unknownPath = ResponseEntity.ok("unknown url")
 
@@ -72,15 +72,15 @@ class ProxyController(@Autowired val okHttpClient: OkHttpClient) : CAbstractCont
     } catch (e: Exception) {
       return when(e) {
         is MalformedURLException -> {
-          log.error("error url", e)
+          log.error({ "error url" }, e)
           ResponseEntity.ok("error url：$url")
         }
         is SocketException, is EofException -> {
-          log.debug("ignore exception", e)
+          log.debug({ "ignore exception" }, e)
           SpringWebUtils.RESPONSE_ENTITY_EMPTY
         }
         else -> {
-          log.error("unknown error", e)
+          log.error({ "unknown error" }, e)
           ResponseEntity.ok(e.message)
         }
       }
