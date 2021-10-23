@@ -1,32 +1,6 @@
 
-compileKotlin {
-  kotlinOptions {
-    jvmTarget = targetCompatibility
-  }
-}
-
-compileTestKotlin {
-  kotlinOptions {
-    jvmTarget = targetCompatibility
-  }
-}
-
 test {
   useJUnitPlatform()
-}
-
-java {
-  toolchain {
-    languageVersion = JavaLanguageVersion.of(jdk_version)
-    vendor = JvmVendorSpec.ADOPTOPENJDK
-    implementation = JvmImplementation.J9
-  }
-}
-
-jar {
-  into("META-INF/resources") {
-    from("src/main/webapp")
-  }
 }
 
 bootJar {
