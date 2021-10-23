@@ -1,4 +1,10 @@
 
+kotlin {
+  jvmToolchain {
+    languageVersion.set(JavaLanguageVersion.of(jdk_version)) // "8"
+  }
+}
+
 test {
   useJUnitPlatform()
 }
