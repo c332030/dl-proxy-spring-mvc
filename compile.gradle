@@ -33,10 +33,3 @@ bootJar {
   archiveFileName = 'boot.jar'
   launchScript()
 }
-
-idea {
-  module {
-    downloadJavadoc = false
-    downloadSources = false
-  }
-}
