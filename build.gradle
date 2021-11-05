@@ -1,17 +1,11 @@
-buildscript {
-  dependencies {
-    classpath(group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: libs.versions.spring.boot.get())
-  }
-}
 
 plugins {
-  id 'net.researchgate.release' version '2.8.1'
-  id "org.jetbrains.kotlin.jvm" version "1.5.31"
-  id "org.jetbrains.kotlin.plugin.spring" version "1.5.31"
+  alias(libs.plugins.release)
+  alias(libs.plugins.kotlin.jvm)
+  alias(libs.plugins.kotlin.plugin.spring)
+  alias(libs.plugins.spring.boot)
+  alias(libs.plugins.spring.dependency)
 }
-
-apply plugin: 'org.springframework.boot'
-apply plugin: 'io.spring.dependency-management'
 
 // configurations.all {
 //   resolutionStrategy.cacheDynamicVersionsFor 1, 'seconds'
