@@ -5,6 +5,7 @@ import com.c332030.service.CAbstractSpringService
 import okhttp3.Headers
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import okhttp3.Response
 import org.apache.commons.io.FilenameUtils
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpHeaders
@@ -40,18 +41,7 @@ class ProxyService(
     val okResponse = okHttpClient.newCall(okRequest).execute()
     response.status = okResponse.code
 
-    var contentDisposition = ""
-    okResponse.headers.iterator().forEachRemaining { pair ->
-
-      val key = pair.first
-      val value = pair.second
-
-      if (HttpHeaders.CONTENT_DISPOSITION == key) {
-        contentDisposition = value
-      }
-      response.setHeader(key, value)
-    }
-    updateContentDisposition(contentDisposition, url)
+    updateHeaders(okResponse, url)
 
     val inputStream = okResponse.body?.byteStream()
     inputStream?.use {
@@ -59,11 +49,21 @@ class ProxyService(
     }
   }
 
-  fun updateContentDisposition(contentDisposition: String, url: String) {
-    if (contentDisposition.isEmpty() || "attachment" != contentDisposition) {
+  fun updateHeaders(okResponse: Response, url: String) {
+    okResponse.headers.iterator().forEachRemaining { pair ->
 
-      val attachment = "attachment; filename=\"${FilenameUtils.getName(url)}\""
-      response.setHeader(HttpHeaders.CONTENT_DISPOSITION, attachment)
+      val key = pair.first
+      val value = pair.second
+
+      if (HttpHeaders.CONTENT_DISPOSITION == key) {
+        if (value.isEmpty() || "attachment" != value) {
+
+          val attachment = "attachment; filename=\"${FilenameUtils.getName(url)}\""
+          response.setHeader(HttpHeaders.CONTENT_DISPOSITION, attachment)
+        }
+        return@forEachRemaining
+      }
+      response.setHeader(key, value)
     }
   }
 
