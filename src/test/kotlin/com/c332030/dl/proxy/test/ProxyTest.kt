@@ -3,6 +3,7 @@ package com.c332030.dl.proxy.test
 import com.c332030.CLogger
 import lombok.SneakyThrows
 import lombok.extern.slf4j.Slf4j
+import org.apache.commons.io.FilenameUtils
 import org.junit.jupiter.api.Test
 
 /**
@@ -21,6 +22,12 @@ class ProxyTest {
   @SneakyThrows
   fun test() {
     log.info { "result" }
+  }
+
+  @Test
+  @SneakyThrows
+  fun attachment() {
+    log.info { "attachment; filename=\"${FilenameUtils.getName("c:\\1.txt")}\"" }
   }
 
 }
