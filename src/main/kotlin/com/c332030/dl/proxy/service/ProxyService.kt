@@ -15,9 +15,9 @@ import javax.servlet.http.HttpServletResponse
 
 @Service
 class ProxyService(
-  @Autowired val request: HttpServletRequest
-  , @Autowired val response: HttpServletResponse
-  , @Autowired val okHttpClient: OkHttpClient
+  @Autowired private val request: HttpServletRequest
+  , @Autowired private val response: HttpServletResponse
+  , @Autowired private val okHttpClient: OkHttpClient
 ): CAbstractSpringService() {
 
   private val log = CLogger(this.javaClass)

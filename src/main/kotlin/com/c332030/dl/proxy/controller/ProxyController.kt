@@ -13,7 +13,9 @@ import java.net.MalformedURLException
 import java.net.SocketException
 
 @Controller
-class ProxyController(@Autowired val proxyService: ProxyService) : CAbstractController() {
+class ProxyController(
+  @Autowired private val proxyService: ProxyService
+) : CAbstractController() {
 
   private val log = CLogger(this.javaClass)
 
