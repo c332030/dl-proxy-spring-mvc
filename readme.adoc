@@ -9,11 +9,13 @@
 
 请在法律允许范围内使用此软件，本人不承担任何非法使用此软件引发的后果
 
+== 示例
+
+https://dl-proxy.c332030.com/
+
 == by get parameter
 
 startup dl-server-app
-
-https://dl-proxy.c332030.com/
 
 [source,shell script]
 ----
