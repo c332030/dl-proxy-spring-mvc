@@ -50,20 +50,22 @@ class ProxyService(
   }
 
   fun updateHeaders(okResponse: Response, url: String) {
+
+    var contentDisposition = ""
     okResponse.headers.iterator().forEachRemaining { pair ->
 
       val key = pair.first
       val value = pair.second
 
       if (HttpHeaders.CONTENT_DISPOSITION == key) {
-        if (value.isEmpty() || "attachment" != value) {
-
-          val attachment = "attachment; filename=\"${FilenameUtils.getName(url)}\""
-          response.setHeader(HttpHeaders.CONTENT_DISPOSITION, attachment)
-        }
+        contentDisposition = value
         return@forEachRemaining
       }
       response.setHeader(key, value)
+    }
+    if (contentDisposition.isEmpty() || "attachment" != contentDisposition) {
+      val attachment = "attachment; filename=\"${FilenameUtils.getName(url)}\""
+      response.setHeader(HttpHeaders.CONTENT_DISPOSITION, attachment)
     }
   }
 
