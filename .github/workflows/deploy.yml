@@ -27,11 +27,13 @@ jobs:
       - uses: cc332030/init-ssh-action@main
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      - name: set REPOSITORY_NAME
+        run: echo "REPOSITORY_NAME=$(echo "${GITHUB_REPOSITORY}" | cut -d / -f 2 | xargs -I {} basename {} .git)" >> $GITHUB_ENV
       - uses: cc332030/deploy-action@main
         env:
           HOST: ${{ secrets.HOST }}
           PORT: ${{ secrets.PORT }}
           ORIGIN_PATH: build/libs/boot.jar
-          REMOTE_PATH: /home/program/${BASE_NAME}/boot.jar
-          PREPARE_COMMAND: docker stop ${BASE_NAME}
-          ACTION_COMMAND: sh /home/program/${BASE_NAME}/install.sh
+          REMOTE_PATH: /home/program/${REPOSITORY_NAME}/boot.jar
+          PREPARE_COMMAND: docker stop ${REPOSITORY_NAME}
+          ACTION_COMMAND: sh /home/program/${REPOSITORY_NAME}/install.sh
