@@ -1,5 +1,5 @@
 
-name: build
+name: deploy
 
 on:
   push:
@@ -12,7 +12,7 @@ on:
       - "*"
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -27,5 +27,11 @@ jobs:
       - uses: cc332030/init-ssh-action@main
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-      - name: deploy
-        run: ${{ secrets.BUILD_DEPLOY }}
+      - uses: cc332030/deploy-action@main
+        env:
+          HOST: ${{ secrets.HOST }}
+          PORT: ${{ secrets.PORT }}
+          ORIGIN_PATH: build/libs/boot.jar
+          REMOTE_PATH: /home/program/${BASE_NAME}/boot.jar
+          PREPARE_COMMAND: docker stop ${BASE_NAME}
+          ACTION_COMMAND: sh /home/program/${BASE_NAME}/install.sh
