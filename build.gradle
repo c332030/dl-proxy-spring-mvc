@@ -48,11 +48,6 @@ dependencies {
   implementation group: 'com.c332030', name: 'c-spring-app-web', version: libs.versions.c.commons.spring.get()
   implementation group: 'com.c332030', name: 'c-commons-kotlin', version: libs.versions.c.commons.kotlin.get()
 
-  compileOnly libs.lombok
-  annotationProcessor libs.lombok
-  testCompileOnly libs.lombok
-  testAnnotationProcessor libs.lombok
-
 }
 
 release {
