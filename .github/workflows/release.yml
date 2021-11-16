@@ -4,10 +4,10 @@ on:
     tags:
       - '*'
 
-name: Release
+name: release
 
 jobs:
-  build:
+  job:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
