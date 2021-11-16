@@ -1,6 +1,8 @@
 
 = dl-proxy
 
+前端: https://github.com/cc332030/dl-proxy-frontend
+
 基于 spring mvc 的文件代理下载服务（简易版的 nginx proxy）
 
 开发的意义是使用境外服务器加速文件下载： github、nexus oss 等网站文件，
@@ -11,11 +13,13 @@
 
 startup dl-server-app
 
+https://dl-proxy.c332030.com/
+
 [source,shell script]
 ----
 
 # 代理下载 url 参数后面的文件链接
 url=https://download.sonatype.com/nexus/oss/nexus-latest-bundle.zip
-curl -L -O https://c332030.com/proxy?url="${url}"
+curl -L -O https://dl-proxy.c332030.com/proxy?url="${url}"
 
 ----
