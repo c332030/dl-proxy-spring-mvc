@@ -23,7 +23,7 @@ jobs:
             ~/.gradle/wrapper
             ~/.gradle/jdks
             ~/.gradle/caches
-      - run: ./gradlew --refresh-dependencies build
+      - run: sh gradlew build
       - uses: cc332030/init-ssh-action@main
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
