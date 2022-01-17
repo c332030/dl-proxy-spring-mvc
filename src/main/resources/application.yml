@@ -8,9 +8,3 @@ spring:
 
   profiles:
     active: dev
-    include:
-      - log-file
-
-logging:
-  level:
-    root: info
