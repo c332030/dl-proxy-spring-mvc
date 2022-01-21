@@ -9,11 +9,10 @@ plugins {
   alias(libs.plugins.release)
   alias(libs.plugins.kotlin.jvm)
   alias(libs.plugins.kotlin.plugin.spring)
+  alias(libs.plugins.spring.boot)
+  alias(libs.plugins.spring.dependency)
   id 'idea'
 }
-
-apply plugin: 'org.springframework.boot'
-apply plugin: 'io.spring.dependency-management'
 
 configurations.all {
   resolutionStrategy.cacheDynamicVersionsFor 1, 'seconds'
