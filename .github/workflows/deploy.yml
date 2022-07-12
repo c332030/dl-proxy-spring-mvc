@@ -14,10 +14,6 @@ on:
 jobs:
   build:
     uses: cc332030/gradle/.github/workflows/gradle.yml@master
-    with:
-      command: sh gradlew build
-  deploy:
-    uses: cc332030/linux/.github/workflows/deploy.yml@master
     secrets:
       SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
       HOST: ${{ secrets.HOST }}
@@ -26,3 +22,5 @@ jobs:
       REMOTE_PATH: /home/program/${REPOSITORY_NAME}/boot.jar
       PREPARE_COMMAND: docker stop ${REPOSITORY_NAME}
       ACTION_COMMAND: sh /home/program/${REPOSITORY_NAME}/install.sh
+    with:
+      command: sh gradlew build
