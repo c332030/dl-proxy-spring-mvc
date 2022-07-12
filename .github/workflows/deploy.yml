@@ -12,23 +12,18 @@ on:
       - "*"
 
 jobs:
-  deploy:
+  build-deploy:
+    name: build-deploy
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/cache@v2
+      - name: build
+        uses: cc332030/gradle/.github/workflows/gradle.yml@master
         with:
-          key: gradle
-          path: |
-            ~/.gradle/wrapper
-            ~/.gradle/jdks
-            ~/.gradle/caches
-      - run: sh gradlew build
-      - uses: cc332030/init-ssh-action@main
+          command: sh gradlew build
+      - name: deploy
+        uses: cc332030/linux/.github/workflows/deploy.yml@master
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-      - uses: cc332030/deploy-action@main
-        env:
           HOST: ${{ secrets.HOST }}
           PORT: ${{ secrets.PORT }}
           ORIGIN_PATH: build/libs/boot.jar
