@@ -1,7 +1,6 @@
 
 rootProject.name = 'dl-proxy'
 
-
 import org.apache.tools.ant.taskdefs.condition.Os
 
 enableFeaturePreview('VERSION_CATALOGS')
