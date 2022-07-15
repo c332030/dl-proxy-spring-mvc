@@ -2,8 +2,7 @@
 kotlin {
   jvmToolchain {
     languageVersion.set(JavaLanguageVersion.of(jdk_version))
-    vendor.set(JvmVendorSpec.ADOPTOPENJDK)
-    implementation.set(JvmImplementation.J9)
+    vendor.set(JvmVendorSpec.IBM_SEMERU)
   }
 }
 
