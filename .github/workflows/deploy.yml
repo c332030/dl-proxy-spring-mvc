@@ -13,24 +13,12 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/cache@v2
-        with:
-          key: gradle
-          path: |
-            ~/.gradle/wrapper
-            ~/.gradle/jdks
-            ~/.gradle/caches
-      - run: sh gradlew build
-      - uses: cc332030/deploy-action@main
-        timeout-minutes: 2
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          HOST: ${{ secrets.HOST }}
-          PORT: ${{ secrets.PORT }}
-          ORIGIN_PATH: build/libs/boot.jar
-          REMOTE_PATH: /home/program/${REPOSITORY_NAME}/boot.jar
-          PREPARE_COMMAND: docker stop ${REPOSITORY_NAME}
-          ACTION_COMMAND: sh /home/program/${REPOSITORY_NAME}/install.sh
+    uses: cc332030/gradle/.github/workflows/deploy.yml@master
+    secrets:
+      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      HOST: ${{ secrets.HOST }}
+      PORT: ${{ secrets.PORT }}
+      ORIGIN_PATH: build/libs/boot.jar
+      REMOTE_PATH: /home/program/${REPOSITORY_NAME}/boot.jar
+      PREPARE_COMMAND: docker stop ${REPOSITORY_NAME}
+      ACTION_COMMAND: sh /home/program/${REPOSITORY_NAME}/install.sh
