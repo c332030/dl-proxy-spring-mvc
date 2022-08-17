@@ -1,4 +1,3 @@
-
 buildscript {
   dependencies {
     classpath(group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: libs.versions.spring.boot.get())
@@ -17,6 +16,11 @@ plugins {
 configurations.all {
   resolutionStrategy.cacheDynamicVersionsFor 1, 'seconds'
   resolutionStrategy.cacheChangingModulesFor 1, 'seconds'
+
+  exclude group: 'com.fasterxml.jackson.core', module: ''
+  exclude group: 'com.fasterxml.jackson.datatype', module: ''
+  exclude group: 'com.fasterxml.jackson.module', module: ''
+
 }
 
 dependencies {
