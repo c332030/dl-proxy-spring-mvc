@@ -12,7 +12,6 @@ test {
 
 bootJar {
   archiveFileName = 'boot.jar'
-  launchScript()
 }
 
 idea {
