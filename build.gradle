@@ -16,11 +16,6 @@ plugins {
 configurations.all {
   resolutionStrategy.cacheDynamicVersionsFor 1, 'seconds'
   resolutionStrategy.cacheChangingModulesFor 1, 'seconds'
-
-  exclude group: 'com.fasterxml.jackson.core', module: ''
-  exclude group: 'com.fasterxml.jackson.datatype', module: ''
-  exclude group: 'com.fasterxml.jackson.module', module: ''
-
 }
 
 dependencies {
@@ -29,6 +24,10 @@ dependencies {
 
   implementation(group: 'org.springframework.boot', name: 'spring-boot-starter-web') {
     exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
+
+    exclude group: 'com.fasterxml.jackson.core', module: ''
+    exclude group: 'com.fasterxml.jackson.datatype', module: ''
+    exclude group: 'com.fasterxml.jackson.module', module: ''
   }
   implementation group: 'org.springframework.boot', name: 'spring-boot-starter-jetty'
 
