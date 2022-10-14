@@ -5,7 +5,6 @@ import com.c332030.controller.CAbstractController
 import com.c332030.dl.proxy.service.ProxyService
 import com.c332030.util.SpringWebUtils
 import org.eclipse.jetty.io.EofException
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
@@ -14,7 +13,7 @@ import java.net.SocketException
 
 @Controller
 class ProxyController(
-  @Autowired private val proxyService: ProxyService
+  private val proxyService: ProxyService
 ) : CAbstractController() {
 
   private val log = CLogger(this.javaClass)

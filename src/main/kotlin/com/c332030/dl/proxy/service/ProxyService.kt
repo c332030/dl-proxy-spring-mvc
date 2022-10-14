@@ -7,7 +7,6 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
 import org.apache.commons.io.FilenameUtils
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpHeaders
 import org.springframework.stereotype.Service
 import javax.servlet.http.HttpServletRequest
@@ -15,9 +14,9 @@ import javax.servlet.http.HttpServletResponse
 
 @Service
 class ProxyService(
-  @Autowired private val request: HttpServletRequest
-  , @Autowired private val response: HttpServletResponse
-  , @Autowired private val okHttpClient: OkHttpClient
+  private val request: HttpServletRequest
+  , private val response: HttpServletResponse
+  , private val okHttpClient: OkHttpClient
 ): CAbstractSpringService() {
 
   private val log = CLogger(this.javaClass)
