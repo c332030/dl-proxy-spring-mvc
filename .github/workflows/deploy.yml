@@ -18,7 +18,8 @@ jobs:
       SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
       HOST: ${{ secrets.HOST }}
       PORT: ${{ secrets.PORT }}
-      ORIGIN_PATH: build/libs/boot.jar
-      REMOTE_PATH: /home/program/${REPOSITORY_NAME}/boot.jar
-      PREPARE_COMMAND: docker stop ${REPOSITORY_NAME}
-      ACTION_COMMAND: sh /home/program/${REPOSITORY_NAME}/install.sh
+    with:
+      origin-path: build/libs/boot.jar
+      remote-path: /home/program/${REPOSITORY_NAME}/boot.jar
+      prepare-command: docker stop ${REPOSITORY_NAME}
+      action-command: sh /home/program/${REPOSITORY_NAME}/install.sh
