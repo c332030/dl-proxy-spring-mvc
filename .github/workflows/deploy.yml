@@ -19,6 +19,7 @@ jobs:
       HOST: ${{ secrets.HOST }}
       PORT: ${{ secrets.PORT }}
     with:
+      java-version: 17
       origin-path: build/libs/boot.jar
       remote-path: /home/program/${REPOSITORY_NAME}/boot.jar
       prepare-command: docker stop ${REPOSITORY_NAME}
