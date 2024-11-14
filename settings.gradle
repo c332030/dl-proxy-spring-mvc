@@ -1,9 +1,7 @@
 
-rootProject.name = 'dl-proxy'
-
 import org.apache.tools.ant.taskdefs.condition.Os
 
-enableFeaturePreview('VERSION_CATALOGS')
+rootProject.name = 'dl-proxy'
 
 def isWindows = Os.isFamily(Os.FAMILY_WINDOWS)
 
@@ -16,7 +14,7 @@ dependencyResolutionManagement {
     if (isWindows) {
 
       maven {
-        url "https://maven.aliyun.com/repository/public"
+        url "https://maven.c332030.com/"
       }
       maven {
         url repoReleaseAliyun
